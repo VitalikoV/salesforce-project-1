@@ -4,7 +4,14 @@ trigger ProjectTrigger on Project__c (after insert) {
     List<Project__c> changedProjects = new List<Project__c>();
     
     for(Project__c project : projects){
-        project.Name = project.User__r.Name + ' - ' + project.Account__r.Name;
+        
+        String name = project.User__r.Name + ' - ' + project.Account__r.Name;
+        if(name.length() < 80){
+        project.Name = name;
+        }else{
+        project.Name = 'length is higher than 80 letters';
+        }
+        
         changedProjects.add(project);
     }
     
