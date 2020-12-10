@@ -1,4 +1,4 @@
-trigger ProjectTrigger on Project__c (after insert) {
+trigger ProjectTrigger on Project__c (before insert, before update) {
 
     new ProjectTriggerHandler().run();
 }
