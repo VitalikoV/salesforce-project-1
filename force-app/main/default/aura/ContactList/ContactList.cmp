@@ -1,0 +1,14 @@
+<aura:component controller="ProjectController" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+    <aura:attribute name="recordId" type="id"/>
+    <aura:attribute name = "columns" type="List"/>
+    <aura:attribute name="contacts" type="Contact[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<lightning:card title="Contacts Related to Account" class="slds-is-relative">
+    <lightning:datatable
+                    	 columns ="{!v.columns}"     
+                   		 data="{!v.contacts}"
+                         keyField="id"
+                         hideCheckboxColumn="true"/>
+        
+    </lightning:card>
+</aura:component>
