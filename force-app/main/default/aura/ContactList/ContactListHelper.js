@@ -9,18 +9,19 @@
                 {label: 'Phone', fieldName: 'Phone', type: 'phone', sortable: "true"},
         ]);
 	}, 
-    
-    
-    queryContacts : function(component) {
+                
+    queryContacts : function(component, fieldName, sortDirection) {
         	let data = component.get("c.getRelatedContacts");
             let pageSize = component.get("v.pageSize").toString();
         	let pageNumber = component.get("v.pageNumber").toString(); 
             data.setParams({
                 recordId : component.get('v.recordId'),
                 'pageSize' : pageSize,
-            	'pageNumber' : pageNumber
+            	'pageNumber' : pageNumber,
+                'sortName' : fieldName,
+                'sortAction' : sortDirection
             });
-            
+                
             data.setCallback(this, function(response){
                 let contacts = response.getReturnValue();
                 let state = response.getState();
@@ -35,30 +36,8 @@
                 }
 				component.set("v.dataSize", contacts.length); 
                 component.set("v.contacts", contacts);
-                sortData(component, component.get("v.sortedBy"), component.get("v.sortedDirection"));
                 }
             });
-            
             $A.enqueueAction(data);
     },
-
-
-    
-    //sort method, that changes order of contacts in the table
-    sortData : function(component, fieldName, sortDirection){
-        let data = component.get("v.contacts");
-        let reverse = sortDirection !== 'asc';
-        data.sort(this.sortBy(fieldName, reverse));
-        component.set("v.contacts", data)
-    },
-    
-    //sort logic
-     sortBy: function (field, reverse) {
-        var key = function(x) {return x[field]};
-        reverse = !reverse ? 1 : -1;
-        return function (a, b) {
-            return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
-        }
-    }
-
 })
