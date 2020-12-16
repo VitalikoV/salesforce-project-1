@@ -2,13 +2,36 @@
     <aura:attribute name="recordId" type="id"/>
     <aura:attribute name = "columns" type="List"/>
     <aura:attribute name="contacts" type="Contact[]"/>
+    <aura:attribute name="pageNumber" type="Integer" default="1"/>
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
+    <aura:attribute name="isLastPage" type="Boolean" default="false"/>
+    <aura:attribute name="dataSize" type="Integer" default="0"/>
+    
+    <aura:attribute name="sortedBy" type="String" default="Name"/>
+    <aura:attribute name="sortedDirection" type="String" default="asc"/>
+    
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
 	<lightning:card title="Contacts Related to Account" class="slds-is-relative">
     <lightning:datatable
                     	 columns ="{!v.columns}"     
                    		 data="{!v.contacts}"
                          keyField="id"
-                         hideCheckboxColumn="true"/>
-        
+                         hideCheckboxColumn="true"
+                         onsort="{!c.updateColumnSorting}"
+                         sortedBy="{!v.sortedBy}"
+                         sortedDirection="{!v.sortedDirection}"/>
+         <div class="slds-clearfix">
+            <div class="slds-page-header" role="banner">
+                <div class="slds-float_right">            
+                    <lightning:button label="Prev" iconName="utility:chevronleft" iconPosition="left"
+                                      onclick="{!c.handlePrev}" disabled="{! v.pageNumber == 1}"/>
+                    <lightning:button label="Next" iconName="utility:chevronright" iconPosition="right"
+                                      disabled="{! v.isLastPage}" onclick="{!c.handleNext}"/>
+                </div>
+                <p class="slds-page-header__title">Page {!v.pageNumber} | Showing records from {! ((v.pageNumber-1)*(v.pageSize)+1)+' to '+((v.pageNumber-1)*v.pageSize+v.dataSize)}</p>
+            </div>
+        </div>
+
     </lightning:card>
 </aura:component>
