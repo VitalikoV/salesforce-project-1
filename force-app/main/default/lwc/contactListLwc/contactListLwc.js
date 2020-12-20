@@ -45,7 +45,14 @@ export default class ContactListLwc extends LightningElement {
     recalculatingParameters(){
         this.totalPage = Math.ceil(this.totalRecountCount / this.pageSize);
         this.data = this.items.slice(0,this.pageSize); 
+        this.startRecord = 1;
         this.endRecord = this.pageSize;
+        if(this.endRecord > this.totalRecountCount){
+            this.endRecord = this.totalRecountCount;
+        }
+        if(this.page > this.totalPage){
+            this.page = this.totalPage;
+        }
     }
 
     //method invokes when you click on the previous button
