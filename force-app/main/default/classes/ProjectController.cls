@@ -7,8 +7,7 @@ public class ProjectController {
 		Integer offsetRecord = (size*numberOfPage);
         
         //Gain account id in order to get related contacts 
-        List<Project__c> projs = [SELECT id, Account__c FROM Project__c WHERE id = :recordId];
-        ID accId = projs.get(0).Account__c; 
+        ID accId = getRelatedId(recordId);
 
         //if you press name on the column, instead of 'Name' you receive 'linkName' because it's a href
         //Consequently, this method change linkName to Name
@@ -24,13 +23,13 @@ public class ProjectController {
 
     @AuraEnabled(cacheable=true)
     public static List<Contact> getAllRelatedContacts(id recordId){
-
-        List<Project__c> projs = [SELECT id, Account__c FROM Project__c WHERE id = :recordId];
-        ID accId = projs.get(0).Account__c; 
-
+        ID accId = getRelatedId(recordId);
         return [SELECT  Name, Email, Phone
-                FROM Contact WHERE accountId= :accId
-                LIMIT 1000];
+                FROM Contact WHERE accountId= :accId];
+    }
 
+    public static ID getRelatedId(id recordId){
+        List<Project__c> projs = [SELECT id, Account__c FROM Project__c WHERE id = :recordId];
+        return projs.get(0).Account__c; 
     }
 }
