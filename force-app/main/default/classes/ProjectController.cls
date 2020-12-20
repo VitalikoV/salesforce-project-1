@@ -21,4 +21,16 @@ public class ProjectController {
         List<Contact>contacts =(List<Contact>) database.query(querystr);
         return contacts;        
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Contact> getAllRelatedContacts(id recordId){
+
+        List<Project__c> projs = [SELECT id, Account__c FROM Project__c WHERE id = :recordId];
+        ID accId = projs.get(0).Account__c; 
+
+        return [SELECT  Name, Email, Phone
+                FROM Contact WHERE accountId= :accId
+                LIMIT 1000];
+
+    }
 }

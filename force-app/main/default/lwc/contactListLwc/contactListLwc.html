@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="List of related Contacts">
+        <lightning-combobox            
+            name="Number of records"
+            label="Number of records on page:"
+            value={pageSize}
+            placeholder="Select number of records"
+            options={options}
+            onchange={changeOption}>
+        </lightning-combobox>
+        <br/>
+        <lightning-datatable
+            key-field="id"
+            data={data}
+            columns={columns}
+            hide-checkbox-column="true"
+            onsort={updateSorting}
+            sorted-by={sortBy}
+            sorted-direction={sortDirection}>
+        </lightning-datatable>
+        <div class="slds-var-m-around_medium">
+            <p class="slds-var-m-vertical_medium content">
+                Showing from {startRecord} to {endRecord} of {totalRecountCount} records.
+                Page {page} of {totalPage}.
+            </p>
+            <c-navigation onprevious={previousHandler} onnext={nextHandler}></c-navigation>
+        </div>
+    </lightning-card>
+</template>
