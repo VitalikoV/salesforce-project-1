@@ -1,27 +1,57 @@
 <aura:component controller="WeatherCallout" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <!-- Id of the current account -->
     <aura:attribute name="recordId" type="id"/>
+    <!-- Contains weather, description and icon -->
     <aura:attribute name="weather" type="Object"/>
+    <!-- Contains temperature, min_temp, max_temp, pressure, humidity -->
+    <aura:attribute name="main" type="Object"/>
+    <!-- Icon of the weather -->
     <aura:attribute name="icon" type="String"/>
+    <!-- City, where weather is shown -->
+    <aura:attribute name="city" type="String"/>
     
+    <!-- Handlers -->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
-    <lightning:card title="Weather">
-        <div class="demo-only slds-size_5-of-6">
-  	<div class="slds-media">
-    	<div class="slds-media__body">
-            <div class="slds-p-left_medium">
-			<h1 class="slds-text-heading_large slds-p-bottom_small">{!v.weather.main}</h1>
-            </div>
-            <div class="slds-p-left_large">
-    		<h1 class="slds-text-heading_small">Description: {!v.weather.description}</h1>   
+
+    <!-- Template -->
+    <lightning:card title="{!'Weather in ' + v.city}">
+        <div class="demo-only">
+  	        <div class="slds-media">
+    	        <div class="slds-media__body">
+                    <div class="slds-p-left_medium">
+			            <h1 class="slds-text-heading_large slds-p-bottom_small">{!v.weather.main}</h1>
+                    </div>
+                    <div class="slds-p-left_large">
+                        <h1 class="slds-text-heading_small">Description: {!v.weather.description}</h1>   
+    		            <h1 class="slds-text-heading_small">Temp: {!v.main.temp}</h1>
+                        <br/>
+                            <div class="slds-grid slds-gutters slds-m-left_xx-large">
+                                <div class="slds-col">
+                                    <h1 class="slds-text-heading_small">Min temp: {!v.main.temp_min}</h1>
+                                </div>
+                                <div class="slds-col">
+            	                    <h1 class="slds-text-heading_small">Max temp: {!v.main.temp_max}</h1>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters slds-m-left_xx-large">
+                                <div class="slds-col">
+                                    <h1 class="slds-text-heading_small">Pressure: {!v.main.pressure}</h1>
+                                </div>
+                                <div class="slds-col">
+                                    <h1 class="slds-text-heading_small">Humidity: {!v.main.humidity}</h1>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div class="slds-media__figure slds-media__figure_reverse">
+                    <span class="slds-avatar slds-avatar_large slds-m-right_xx-large">
+			            <div class="page-section page-right">
+                            <img src="{!v.icon}" alt="Weather icon"/>
+                        </div>
+                    </span>
+                </div>
             </div>
         </div>
-    <div class="slds-media__figure slds-media__figure_reverse">
-      <span class="slds-avatar slds-avatar_large ">
-			        <div class="page-section page-right"><img src="{!v.icon}" alt="Weather icon"/></div>
-      </span>
-    </div>
-  </div>
-</div>
-    
     </lightning:card>
 </aura:component>

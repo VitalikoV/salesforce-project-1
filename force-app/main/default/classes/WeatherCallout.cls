@@ -1,6 +1,28 @@
 public class WeatherCallout {
+    
     @AuraEnabled(cacheable=true)
     public static Object getWeather(Id recordId){
+        HttpResponse response = getHttpData(recordId);
+        Object weatherData;
+        if(response.getStatusCode() == 200){
+            Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+            List<Object> weatherResults = (List<Object>)(results.get('weather'));
+        	weatherData = weatherResults.get(0);
+        }
+        return weatherData;
+    }
+    
+    @AuraEnabled(cacheable=true)
+    public static Object getAllWeather(Id recordId){
+        HttpResponse response = getHttpData(recordId);
+        Map<String, Object> results = new Map<String, Object>();
+        if(response.getStatusCode() == 200){
+             results = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
+        }
+        return results;
+    }
+    
+    public static HttpResponse getHttpData(id recordId){
         List<Account> accList = [SELECT BillingCity FROM Account WHERE id = :recordId];
         String bCity = accList.get(0).BillingCity;
         Http http = new Http();
@@ -18,13 +40,6 @@ public class WeatherCallout {
         request.setMethod('GET');
         
         HttpResponse response = http.send(request);
-        Object res;
-        if(response.getStatusCode() == 200){
-            Map<String, Object> results = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
-            List<Object> weatherResults = (List<Object>)(results.get('weather'));
-        	res = weatherResults.get(0);
-        }
-        return res;
+        return response;
     }
-    
 }
