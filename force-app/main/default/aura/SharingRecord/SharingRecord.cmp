@@ -1,0 +1,40 @@
+<aura:component controller="OpportunitySharing" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+
+<!-- <aura:attribute name="recordId" type="Id"/> -->
+<aura:attribute name = "columns" type="List"/>
+<aura:attribute name = "users" type="User[]"/>
+<aura:attribute name = "usersWithSharing" type="User[]"/>
+
+<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+<lightning:card title="Record Shared With This Users:">
+    <lightning:datatable
+        columns="{!v.columns}"
+        data="{!v.usersWithSharing}"
+        keyField="id"
+        aura:id="sharedUsersTable"
+        />
+
+        <div class="slds-clearfix">    
+                <div class="slds-float_right slds-m-right_large slds-m-top_large">            
+                    <lightning:button label="Delete Sharing"
+                                      onclick="{!c.handleRemovingUsers}"/>
+                    </div>
+        </div>
+</lightning:card>
+
+<lightning:card title="Share record With:"> 
+    <lightning:datatable
+        columns="{!v.columns}"
+        data="{!v.users}"
+        keyField="id"
+        aura:id="usersTable"/>
+        <div class="slds-clearfix">
+                <div class="slds-float_right slds-m-right_large slds-m-top_large">            
+                    <lightning:button label="Share Record"
+                                      onclick="{!c.handleSelectedRows}"/>
+                    </div>
+        </div>
+</lightning:card>
+
+</aura:component>	
