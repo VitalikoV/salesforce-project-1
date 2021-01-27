@@ -4,16 +4,12 @@ public with sharing class UserTriggerHandler extends TriggerHandler{
         List<User> users = (List<User>)Trigger.new;
         List<UserRole> roles = [SELECT id, Name, ParentRoleId FROM UserRole];
         String roleName = null;
-
+        id salesProfileId = '00e09000000MembAAC';
 
         for(User user : users){
             for(UserRole role: roles){
-                if (role.id == user.userRoleId) {
+                if (role.id == user.userRoleId && user.profileId == salesProfileId) {
                     roleName = (String) role.Name;
-                }
-
-            }
-
 
             if (roleName.contains('Consulting')) {
                 user.Department = 'Consulting';
@@ -33,6 +29,11 @@ public with sharing class UserTriggerHandler extends TriggerHandler{
             if (roleName.contains('Asia')) {
                 user.Team__c = 'Asia';
             }
+                }
+
+            }
+
+
         }
     }
 
@@ -46,9 +47,7 @@ public with sharing class UserTriggerHandler extends TriggerHandler{
             for(UserRole role: roles){
                 if (role.id == user.userRoleId) {
                     roleName = (String) role.Name;
-                }
-            }
-
+           
 
             if (roleName.contains('Consulting')) {
                 user.Department = 'Consulting';
@@ -68,6 +67,10 @@ public with sharing class UserTriggerHandler extends TriggerHandler{
             if (roleName.contains('Asia')) {
                 user.Team__c = 'Asia';
             }
+                }
+            }
+
+
 
         }}
 

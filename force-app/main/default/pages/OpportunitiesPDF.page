@@ -1,0 +1,83 @@
+<apex:page standardController="Account" extensions="OpportunitiesPDFController" sidebar="false" showHeader="false" applyBodyTag="false"
+  renderAs="PDF">
+  <html>
+
+  <head>
+  </head>
+
+  <body style="font-family: sans-serif;
+		              font-weight: 100;">
+    <div>
+      <div style="display:inline-block; height: 200px; width: 300px;">
+        <apex:outputText value="{!Account.Name}" />
+        <br/>
+        <apex:outputText value="{!Account.BillingStreet}" />
+        <br/>
+        <apex:outputText value="{!Account.BillingCity}" />
+        <br/>
+        <apex:outputText value="{!Account.BillingCountry}" />
+      </div>
+      <div style="display:inline-block; height: 200px; width: 300px; float: right; margin-top: -50px; margin-right: -100px">
+        <!-- <apex:image url="https://res-4.cloudinary.com/crunchbase-production/image/upload/c_lpad,h_170,w_170,f_auto,b_white,q_auto:eco/qhqoc93zkyw7ease3udd"
+          width="200" height="155" /> -->
+          <apex:image url="{!$Resource.redTagLogo}" width="200" height="155"/>
+      </div>
+    </div>
+
+    <table style="width: 700px; border-collapse: collapse; margin-top: -50px">
+      <thead>
+        <tr class="slds-line-height_reset">
+          <th class="" scope="col">
+            <div class="slds-truncate" title="Opportunity Name">Opportunity Name</div>
+          </th>
+          <th class="" scope="col">
+            <div class="slds-truncate" title="Close Date">Close Date</div>
+          </th>
+          <th class="" scope="col">
+            <div class="slds-truncate" title="Stage">Stage</div>
+          </th>
+          <th class="" scope="col">
+            <div class="slds-truncate" title="Amount">Amount</div>
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <apex:repeat value="{!relatedOpps}" var="row">
+
+          <tr class="slds-hint-parent">
+            <td data-label="Opportunity Name">
+              <div class="slds-truncate">
+                <apex:outputText value="{!row.name}" />
+              </div>
+            </td>
+            <td data-label="Close Date">
+              <div class="slds-truncate">
+                <apex:outputText value="{!row.closeDate}" />
+              </div>
+            </td>
+            <td data-label="Stage">
+              <div class="slds-truncate">
+                <apex:outputText value="{!row.stageName}" />
+              </div>
+            </td>
+            <td data-label="Amount">
+              <div class="slds-truncate">
+                <apex:outputText value="{!row.amount}" /> </div>
+            </td>
+
+          </tr>
+
+        </apex:repeat>
+
+
+      </tbody>
+      <hr/>
+      <div style="float:right; margin-right:10px; margin-top:10px;">
+        <apex:outputText value="{!calculatedAmount}0" />
+      </div>
+    </table>
+  </body>
+
+  </html>
+</apex:page>

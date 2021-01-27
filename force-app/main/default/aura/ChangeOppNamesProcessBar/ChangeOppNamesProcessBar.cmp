@@ -1,0 +1,33 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" controller="ChangeAllOppNames">
+
+    <aura:attribute name="progress" type="Integer" default="0"/>
+    <aura:attribute name="apexJob" type="AsyncApexJob"/>
+    
+    <ltng:require styles="{!$Resource.modalCss}" />
+    
+    <div class="slds-m-top_small slds-m-bottom_small">
+        Example: 
+    </div>
+
+    <div class="slds-m-top_small slds-m-bottom_small">
+        Opportunity Name: Building Integration => Test Building Integration
+    </div>
+
+    <div>
+        Change all names of Opps: 
+        <lightning:button variant="brand" label="Execute" title="Execute" onclick="{!c.executeBatch}" />   
+    </div>
+
+    <div class="slds-m-top_medium">
+    <aura:if isTrue="{!v.apexJob != null}">
+        <aura:if isTrue="{!v.apexJob.jobItemsProcessed != v.apexJob.TotalJobItems}">
+            Processing {!v.apexJob.jobItemsProcessed} of {!v.apexJob.TotalJobItems}
+        </aura:if>
+        <aura:if isTrue="{!v.apexJob.Status == 'Completed'}">
+            Completed with {!v.apexJob.NumberOfErrors} errors.
+        </aura:if>
+    
+        <lightning:progressBar value="{!v.progress}" size="large" variant="circular"/>
+    </aura:if>
+</div>
+</aura:component>
