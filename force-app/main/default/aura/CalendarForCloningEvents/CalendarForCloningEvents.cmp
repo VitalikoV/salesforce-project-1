@@ -1,0 +1,99 @@
+<aura:component controller="CloningController" implements="flexipage:availableForRecordHome,force:hasRecordId" access="global">
+
+
+  <aura:attribute name="recordId" type="id"/>
+  <aura:attribute name="options" type="List" default="[
+{'label' : 'Week', 'value' : 'Week'},
+{'label' : 'Month', 'value' : 'Month'},
+]"/>
+
+<aura:attribute type="List" name="selectedCheckboxes" default="[]"/>
+
+
+
+
+
+
+
+
+    <lightning:card title="Clone Events">
+
+    <!-- What period of time it will perform-->
+    <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+        <div class="slds-size_1-of-4">
+            <div class="slds-p-left_medium slds-p-top_large ">
+                Repeat Every:
+            </div>
+        </div>
+        <div class="slds-size_1-of-3 slds-p-right_large slds-p-left_medium">
+            <lightning:input aura:id="quantityOfTimes" type="number" name="quantityOfTimes" min="0" max="10" value="1"/>
+        </div>
+        <div class="slds-size_1-of-3 slds-p-right_large">
+            <lightning:combobox aura:id="segment" name="Segment Of Time" value="Week" options="{!v.options}"/>
+        </div>
+    </div>
+
+
+    <br/>
+
+    <!-- Fields To chose Day Of Week-->
+    <fieldset class="slds-form-element slds-has-error slds-p-left_medium">
+        <legend class="slds-form-element__legend slds-form-element__label">Scheduled Day(s)</legend>
+        <div class="slds-form-element__control slds-p-left_medium">
+          <div class="slds-checkbox_button-group">
+            <span class="slds-button slds-checkbox_button">
+              <input type="checkbox" id="unique-id-monday-52" aura:id="monday" value="1" name="checkbox" onchange="{!c.setCheckbox}"/>
+              <label class="slds-checkbox_button__label" for="unique-id-monday-52">
+                <span class="slds-checkbox_faux">Mon</span>
+              </label>
+            </span>
+            <span class="slds-button slds-checkbox_button">
+              <input type="checkbox" id="unique-id-tuesday-52" aura:id="tuesday" value="2" name="checkbox" onchange="{!c.setCheckbox}"/>
+              <label class="slds-checkbox_button__label" for="unique-id-tuesday-52">
+                <span class="slds-checkbox_faux">Tue</span>
+              </label>
+            </span>
+            <span class="slds-button slds-checkbox_button">
+              <input type="checkbox" id="unique-id-wednesday-52" aura:id="wednesday" value="3" name="checkbox" onchange="{!c.setCheckbox}"/>
+              <label class="slds-checkbox_button__label" for="unique-id-wednesday-52">
+                <span class="slds-checkbox_faux">Wed</span>
+              </label>
+            </span>
+            <span class="slds-button slds-checkbox_button">
+              <input type="checkbox" id="unique-id-thursday-52" aura:id="thursday" value="4" name="checkbox" onchange="{!c.setCheckbox}"/>
+              <label class="slds-checkbox_button__label" for="unique-id-thursday-52">
+                <span class="slds-checkbox_faux">Thu</span>
+              </label>
+            </span>
+            <span class="slds-button slds-checkbox_button">
+              <input type="checkbox" id="unique-id-friday-52" aura:id="friday" value="5" name="checkbox" onchange="{!c.setCheckbox}"/>
+              <label class="slds-checkbox_button__label" for="unique-id-friday-52">
+                <span class="slds-checkbox_faux">Fri</span>
+              </label>
+            </span>
+          </div>
+        </div>
+      </fieldset>
+
+      <br/>
+
+      <!-- Input for end date -->
+      <div class="slds-list_horizontal">
+        <div class=" slds-item slds-p-left_medium slds-p-top_large">
+          End Date:
+          </div>
+          <div class="slds-item slds-p-left_large">
+              <lightning:input type="date" aura:id="endDate" name="endDate"/>
+          </div>
+      </div>
+
+
+<div class="slds-clearfix">
+    <div class="slds-float_right">
+        <lightning:button class="slds-m-right_large slds-m-top_large" variant="base" label="Done" title="Done"  onclick="{! c.sendData }"/>
+    </div>
+</div>
+
+
+</lightning:card>
+</aura:component>	

@@ -13,7 +13,7 @@ public class ChangeAllOppNames {
     @AuraEnabled
     public static id changeNamesByOne(){
             OpportunityNameChange bChange = new OpportunityNameChange();
-            id batchId = Database.executeBatch(bChange, 1);
+            id batchId = Database.executeBatch(bChange);
         return batchId;
     }
 

@@ -15,7 +15,6 @@ public with sharing class OpportunityNameChangeTest {
 
     @isTest
     static void test(){
-        
         Test.startTest();
         OpportunityNameChange oppNameChange = new OpportunityNameChange();
         Id batchId = Database.executeBatch(oppNameChange);

@@ -1,11 +1,12 @@
-<aura:component controller="AccountPDFController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+<aura:component controller="AccountPDFController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId, force:lightningQuickAction" access="global" >
     <aura:attribute name="recordId" type="Id"/>
     <aura:attribute name="pdfData" type="String"/>
     <aura:handler name="init" value="{!this}" action="{! c.doInit}"/>
 	<aura:attribute name="pdfContainer" type="Aura.Component[]"/>
-        
-    <iframe src="{!pdfData}" aura:id="preview" height="500px" width="500px"></iframe> 
     
-   	{!v.pdfContainer}    
+
+    <!-- <iframe src="{!pdfData}" aura:id="preview" height="500px" width="500px"></iframe>  -->
+    <iframe src="{!'/apex/OpportunitiesPDF?id=' + v.recordId}" aura:id="preview" height="800px" width="600px"></iframe>
+   	<!-- {!v.pdfContainer}     -->
 
 </aura:component>
